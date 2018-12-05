@@ -42,7 +42,6 @@ class VexRemote():
             self.clock.tick(10)
             x=self.joystick.get_axis(0)
             y=self.joystick.get_axis(1)
-            y=-y
             right=x+y
             left=-x+y
             self.tell_rotation_phase(left,right)

@@ -18,20 +18,21 @@ class VexBot:
         self.socksend.sendto(data+b'\n',(self.ip,self.port))
     def recv_loop(self):
         while self.running:
-            data,addr = self.sockrecv.recvfrom(16)
+            data,addr = self.sockrecv.recvfrom(256)
             self.data+=data
             data=self.data.split(b'\n')
             for i in data[:-1]: 
                 self.callback(i)
             self.data=data[-1]
     def callback(self,data):
-        print(data,self.data)
-        if data[0]==b'r':
-            d,l,r=data.split(b':')
+        if data[0]==b'r'[0]:
+            data=data.split(b':')
+            _,l,r=data
             l=float(str(l,'utf-8'))
             r=float(str(r,'utf-8'))
-            self.sleft.value=l
-            self.sright.value=r
+            print(l,r)
+            self.sleft.value=max(-1,min(1,l))
+            self.sright.value=max(-1,min(1,r))
             if l==r==0:self.stop()
 
 
@@ -60,3 +61,4 @@ if __name__=='__main__':
         if a=='a':v.left()
         if a=='d':v.right()
         if a=='':v.stop()
+
